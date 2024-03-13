@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import bancoDados.Banco;
 import entidades.Caderno;
+import entidades.Cliente;
 import entidades.Cupom;
 import entidades.Livro;
 import entidades.Pedido;
@@ -148,5 +149,15 @@ public final class LeitoraDados {
 
 		return Optional.empty();
 	}
+
+	public static Cliente lerNovoCliente() {
+        System.out.println("Digite o nome do cliente:");
+        String nome = lerDado();
+        
+        System.out.println("Digite o CPF do cliente:");
+        String cpf = lerDado();
+        
+        return new Cliente(nome, cpf);
+    }
 
 }

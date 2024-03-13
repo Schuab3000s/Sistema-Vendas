@@ -20,6 +20,11 @@ public class Cliente {
     /**
      * Construtor padrão que inicializa o cliente com nome e CPF padrão.
      */
+    public Cliente(String nome, String cpf) {
+        this.nome = nome;
+        this.cpf = cpf;
+    }
+
     public Cliente() {
         this.nome = "";
         this.cpf = "";
@@ -33,7 +38,7 @@ public class Cliente {
     public String getNome() {
         return nome;
     }
-
+    
     /**
      * Define o nome do cliente.
      * 

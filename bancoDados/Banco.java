@@ -42,8 +42,10 @@ public class Banco {
      */
     private Cliente cliente;
 
-    public Banco() {
+    private List<Cliente> clientes;
 
+    public Banco() {
+        this.clientes = new ArrayList<>();
         this.produtos = new ArrayList<>();
         this.pedidos = new ArrayList<>();
         this.cliente = new Cliente();
@@ -146,6 +148,15 @@ public class Banco {
             }
         }
         return cadernosEncontrados;
+    }
+
+    public Optional<Cliente> consultarClientePorCPF(String cpf) {
+        for (Cliente clientes : clientes) {
+            if (cliente.getCpf().equals(cpf)) {
+                return Optional.of(cliente);
+            }
+        }
+        return Optional.empty();
     }
 
 }

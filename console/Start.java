@@ -40,7 +40,36 @@ public class Start {
 
         System.out.println("Bem vindo ao e-Compras");
 
-        String opcao = "";
+        System.out.println("Selecione uma opção:");
+        System.out.println("1 - Cadastrar Novo Usuário");
+        System.out.println("2 - Fazer Login");
+        System.out.println("3 - Sair");
+
+        String opcao = LeitoraDados.lerDado();
+
+        switch (opcao) {
+            case "1":
+                Cliente novoCliente = LeitoraDados.lerNovoCliente();
+                clienteNegocio.salvar(novoCliente);
+                clienteLogado = novoCliente;
+                break;
+            case "2":
+                System.out.println("Digite o CPF:");
+                String cpf = LeitoraDados.lerDado();
+                identificarUsuario(cpf);
+                break;
+            case "3":
+                System.out.println("Aplicação encerrada.");
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Opção inválida.");
+                break;
+        }
+        
+        System.out.println("Bem vindo ao e-Compras");
+
+        String opcao2 = "";
 
         while (true) {
 
@@ -69,9 +98,9 @@ public class Start {
             System.out.println("12 - Consultar Caderno por Matéria");
             System.out.println("13 - Consultar Pedido por código");
 
-            opcao = LeitoraDados.lerDado();
+            opcao2 = LeitoraDados.lerDado();
 
-            switch (opcao) {
+            switch (opcao2) {
                 case "1":
                     Livro livro = LeitoraDados.lerLivro();
                     produtoNegocio.salvar(livro);
@@ -91,9 +120,9 @@ public class Start {
                     produtoNegocio.excluir(codigoCaderno);
                     break;
                 case "5":
-                    List<Produto> produtos = List.of(banco.getProdutos()); // Obtendo a lista de produtos do banco
-                    Pedido pedido = LeitoraDados.lerPedido(produtos); // Passando a lista de produtos para o método
-                    Optional<Cupom> cupom = LeitoraDados.lerCupom(banco); // lerPedido
+                    List<Produto> produtos = List.of(banco.getProdutos());  // Obtendo a lista de produtos do banco
+                    Pedido pedido = LeitoraDados.lerPedido(produtos);       // Passando a lista de produtos para o método
+                    Optional<Cupom> cupom = LeitoraDados.lerCupom(banco);   // lerPedido
                     PedidoNegocio.aplicarCupomEquivocado(banco, pedido, cupom);
                     break;
 
