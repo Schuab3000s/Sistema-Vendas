@@ -40,31 +40,37 @@ public class Start {
 
         System.out.println("Bem vindo ao e-Compras");
 
-        System.out.println("Selecione uma opção:");
-        System.out.println("1 - Cadastrar Novo Usuário");
-        System.out.println("2 - Fazer Login");
-        System.out.println("3 - Sair");
-
-        String opcao = LeitoraDados.lerDado();
-
-        switch (opcao) {
-            case "1":
-                Cliente novoCliente = LeitoraDados.lerNovoCliente();
-                clienteNegocio.salvar(novoCliente);
-                clienteLogado = novoCliente;
-                break;
-            case "2":
-                System.out.println("Digite o CPF:");
-                String cpf = LeitoraDados.lerDado();
-                identificarUsuario(cpf);
-                break;
-            case "3":
-                System.out.println("Aplicação encerrada.");
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Opção inválida.");
-                break;
+        while (clienteLogado == null) {
+            System.out.println("Selecione uma opção:");
+            System.out.println("1 - Cadastrar Novo Usuário");
+            System.out.println("2 - Fazer Login");
+            System.out.println("3 - Sair");
+    
+            String opcao = LeitoraDados.lerDado();
+    
+            switch (opcao) {
+                case "1":
+                    Cliente novoCliente = LeitoraDados.lerNovoCliente();
+                    while (!clienteNegocio.validarCPF(novoCliente.getCpf())) {
+                        System.out.println("CPF inválido. Por favor, digite novamente:");
+                        novoCliente.setCpf(LeitoraDados.lerDado());
+                    }
+                    clienteNegocio.salvar(novoCliente);
+                    clienteLogado = novoCliente;
+                    break;
+                case "2":
+                    System.out.println("Digite o CPF:");
+                    String cpf = LeitoraDados.lerDado();
+                    identificarUsuario(cpf);
+                    break;
+                case "3":
+                    System.out.println("Aplicação encerrada.");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+                    break;
+            }
         }
         
         System.out.println("Bem vindo ao e-Compras");

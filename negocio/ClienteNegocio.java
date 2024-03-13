@@ -80,7 +80,7 @@ public class ClienteNegocio {
         System.out.println("Cliente cadastrado com sucesso.");
     }
 
-    private boolean validarCPF(String cpf) {
+    public boolean validarCPF(String cpf) {
         // Verifica se o CPF tem 11 dígitos
         if (cpf == null || cpf.length() != 11) {
             return false;
