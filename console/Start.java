@@ -91,11 +91,9 @@ public class Start {
                     produtoNegocio.excluir(codigoCaderno);
                     break;
                 case "5":
-                    List<Produto> produtos = List.of(banco.getProdutos()); // Obtendo a lista de produtos do banco
-                    Pedido pedido = LeitoraDados.lerPedido(produtos); // Passando a lista de produtos para o método
-                                                                      // lerPedido
-                    Optional<Cupom> cupom = LeitoraDados.lerCupom(banco);
-
+                    List<Produto> produtos = List.of(banco.getProdutos());  // Obtendo a lista de produtos do banco
+                    Pedido pedido = LeitoraDados.lerPedido(produtos);       // Passando a lista de produtos para o método
+                    Optional<Cupom> cupom = LeitoraDados.lerCupom(banco);   // lerPedido
                     PedidoNegocio.aplicarCupomEquivocado(banco, pedido, cupom);
                     break;
 
