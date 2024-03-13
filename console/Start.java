@@ -1,5 +1,6 @@
 package console;
 
+import java.util.List;
 import java.util.Optional;
 
 import bancoDados.Banco;
@@ -8,6 +9,7 @@ import entidades.Cliente;
 import entidades.Cupom;
 import entidades.Livro;
 import entidades.Pedido;
+import entidades.Produto;
 import negocio.ClienteNegocio;
 import negocio.PedidoNegocio;
 import negocio.ProdutoNegocio;
@@ -89,15 +91,14 @@ public class Start {
                     produtoNegocio.excluir(codigoCaderno);
                     break;
                 case "5":
-                    Pedido pedido = LeitoraDados.lerPedido(banco);
+                    List<Produto> produtos = List.of(banco.getProdutos()); // Obtendo a lista de produtos do banco
+                    Pedido pedido = LeitoraDados.lerPedido(produtos); // Passando a lista de produtos para o método
+                                                                      // lerPedido
                     Optional<Cupom> cupom = LeitoraDados.lerCupom(banco);
 
-                    if (cupom.isPresent()) {
-                        pedidoNegocio.salvar(pedido, cupom.get());
-                    } else {
-                        pedidoNegocio.salvar(pedido);
-                    }
+                    PedidoNegocio.aplicarCupomEquivocado(banco, pedido, cupom);
                     break;
+
                 case "6":
                     System.out.println("Digite o código do pedido");
                     String codigoPedido = LeitoraDados.lerDado();

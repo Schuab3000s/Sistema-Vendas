@@ -1,5 +1,6 @@
 package utilidades;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -91,38 +92,37 @@ public final class LeitoraDados {
 	/**
 	 * Ler os dados do pedido e retorna um objeto a partir destes.
 	 * 
+	 * @param produtosOs produtos já cadastrados no banco de dados
 	 * @return Um pedido a partir dos dados de entrada
 	 */
-	public static Pedido lerPedido(Banco banco) {
-
-		ProdutoNegocio produtoNegocio = new ProdutoNegocio(banco);
-
+	public static Pedido lerPedido(List<Produto> produtos) {
 		System.out.println("Cadastrando pedido...");
 		Pedido pedido = new Pedido();
 
 		String opcao = "s";
 		do {
-
-			System.out.println("Digite o código do produto(livro/Caderno)");
+			System.out.println("Digite o código do produto (livro/caderno):");
 			String codigo = lerDado();
 
-			Optional<Produto> resultado = produtoNegocio.consultar(codigo);
-			if (resultado.isPresent()) {
+			Optional<Produto> resultado = produtos.stream()
+					.filter(produto -> produto.getCodigo().equalsIgnoreCase(codigo))
+					.findFirst();
 
+			if (resultado.isPresent()) {
 				Produto produto = resultado.get();
 
-				System.out.println("Digite a quantidade");
+				System.out.println("Digite a quantidade:");
 				String quantidade = lerDado();
 				produto.setQuantidade(Integer.parseInt(quantidade));
 
 				pedido.getProdutos().add(produto);
 			} else {
-				System.out.println("Produto inexistente. Escolha um produto válido");
+				System.out.println("Produto inexistente. Escolha um produto válido.");
 			}
 
-			System.out.println("Deseja selecionar mais um produto? s/n");
+			System.out.println("Deseja selecionar mais um produto? (s/n)");
 			opcao = lerDado();
-		} while ("s".equals(opcao));
+		} while ("s".equalsIgnoreCase(opcao));
 
 		return pedido;
 	}
