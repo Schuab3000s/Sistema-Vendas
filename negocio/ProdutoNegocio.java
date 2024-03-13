@@ -1,8 +1,11 @@
 package negocio;
 
+import java.util.List;
 import java.util.Optional;
 
 import bancoDados.Banco;
+import entidades.Caderno;
+import entidades.Livro;
 import entidades.Produto;
 
 /**
@@ -92,4 +95,27 @@ public class ProdutoNegocio {
     private Optional<Produto> buscarProdutoPorCodigo(String codigo) {
         return bancoDados.consultarProdutoPorCodigo(codigo);
     }
+
+    public void consultarLivroPorNome(String nome) {
+        List<Livro> livrosEncontrados = bancoDados.consultarLivroPorNome(nome);
+        if (!livrosEncontrados.isEmpty()) {
+            for (Livro livro : livrosEncontrados) {
+                System.out.println(livro);
+            }
+        } else {
+            System.out.println("Nenhum livro encontrado com o nome fornecido.");
+        }
+    }
+
+    public void consultarCadernoPorMateria(String materia) {
+        List<Caderno> cadernosEncontrados = bancoDados.consultarCadernoPorMateria(materia);
+        if (!cadernosEncontrados.isEmpty()) {
+            for (Caderno caderno : cadernosEncontrados) {
+                System.out.println(caderno);
+            }
+        } else {
+            System.out.println("Nenhum caderno encontrado com a matéria fornecida.");
+        }
+    }
+
 }

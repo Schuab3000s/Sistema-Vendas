@@ -68,6 +68,8 @@ public class Start {
             System.out.println("8 - Listar pedidos");
             System.out.println("9 - Deslogar");
             System.out.println("10 - Sair");
+            System.out.println("11 - Consultar Livro por Nome");
+            System.out.println("12 - Consultar Caderno por Matéria");
 
             opcao = LeitoraDados.lerDado();
 
@@ -91,9 +93,9 @@ public class Start {
                     produtoNegocio.excluir(codigoCaderno);
                     break;
                 case "5":
-                    List<Produto> produtos = List.of(banco.getProdutos());  // Obtendo a lista de produtos do banco
-                    Pedido pedido = LeitoraDados.lerPedido(produtos);       // Passando a lista de produtos para o método
-                    Optional<Cupom> cupom = LeitoraDados.lerCupom(banco);   // lerPedido
+                    List<Produto> produtos = List.of(banco.getProdutos()); // Obtendo a lista de produtos do banco
+                    Pedido pedido = LeitoraDados.lerPedido(produtos); // Passando a lista de produtos para o método
+                    Optional<Cupom> cupom = LeitoraDados.lerCupom(banco); // lerPedido
                     PedidoNegocio.aplicarCupomEquivocado(banco, pedido, cupom);
                     break;
 
@@ -116,6 +118,17 @@ public class Start {
                     System.out.println("Aplicação encerrada.");
                     System.exit(0);
                     break;
+                case "11":
+                    System.out.println("Digite o nome do livro:");
+                    String nomeLivro = LeitoraDados.lerDado();
+                    produtoNegocio.consultarLivroPorNome(nomeLivro);
+                    break;
+                case "12":
+                    System.out.println("Digite a matéria do caderno:");
+                    String materiaCaderno = LeitoraDados.lerDado();
+                    produtoNegocio.consultarCadernoPorMateria(materiaCaderno);
+                    break;
+
                 default:
                     System.out.println("Opção inválida.");
                     break;

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import entidades.Caderno;
 import entidades.Cliente;
 import entidades.Cupom;
+import entidades.Livro;
 import entidades.Pedido;
 import entidades.Produto;
 
@@ -110,4 +112,25 @@ public class Banco {
         }
         return Optional.empty();
     }
+
+    public List<Livro> consultarLivroPorNome(String nome) {
+        List<Livro> livrosEncontrados = new ArrayList<>();
+        for (Produto produto : produtos) {
+            if (produto instanceof Livro && ((Livro) produto).getNome().equalsIgnoreCase(nome)) {
+                livrosEncontrados.add((Livro) produto);
+            }
+        }
+        return livrosEncontrados;
+    }
+
+    public List<Caderno> consultarCadernoPorMateria(String materia) {
+        List<Caderno> cadernosEncontrados = new ArrayList<>();
+        for (Produto produto : produtos) {
+            if (produto instanceof Caderno && ((Caderno) produto).getMateria().equalsIgnoreCase(materia)) {
+                cadernosEncontrados.add((Caderno) produto);
+            }
+        }
+        return cadernosEncontrados;
+    }
+
 }
