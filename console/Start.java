@@ -57,19 +57,17 @@ public class Start {
             System.out.println("Selecione uma opção:");
             System.out.println("1 - Cadastrar Livro");
             System.out.println("2 - Excluir Livro");
-            // TODO Desafio: Consultar Livro(nome)
             System.out.println("3 - Cadastrar Caderno");
             System.out.println("4 - Excluir Caderno");
-            // TODO Desafio: Consultar Caderno(matéria)
             System.out.println("5 - Fazer pedido");
             System.out.println("6 - Excluir pedido");
-            // TODO Desafio: Consultar Pedido(código)
             System.out.println("7 - Listar produtos");
             System.out.println("8 - Listar pedidos");
             System.out.println("9 - Deslogar");
             System.out.println("10 - Sair");
             System.out.println("11 - Consultar Livro por Nome");
             System.out.println("12 - Consultar Caderno por Matéria");
+            System.out.println("13 - Consultar Pedido por código");
 
             opcao = LeitoraDados.lerDado();
 
@@ -127,6 +125,11 @@ public class Start {
                     System.out.println("Digite a matéria do caderno:");
                     String materiaCaderno = LeitoraDados.lerDado();
                     produtoNegocio.consultarCadernoPorMateria(materiaCaderno);
+                    break;
+                case "13":
+                    System.out.println("Digite o código do pedido:");
+                    String codigoPedido2 = LeitoraDados.lerDado();
+                    pedidoNegocio.consultarPedidoPorCodigo(codigoPedido2);
                     break;
 
                 default:

@@ -101,13 +101,21 @@ public class PedidoNegocio {
 
     public static void aplicarCupomEquivocado(Banco banco, Pedido pedido, Optional<Cupom> cupom) {
         PedidoNegocio pedidoNegocio = new PedidoNegocio(banco);
-    
+
         if (cupom.isPresent()) {
             pedidoNegocio.salvar(pedido, cupom.get());
         } else {
             pedidoNegocio.salvar(pedido);
         }
     }
-    
 
+    /**
+     * Consulta um pedido pelo código de cadastro.
+     * 
+     * @param codigo Código de cadastro do pedido.
+     * @return Optional contendo o pedido encontrado, se existir.
+     */
+    public Optional<Pedido> consultarPedidoPorCodigo(String codigo) {
+        return bancoDados.consultarPedidoPorCodigo(codigo);
+    }
 }

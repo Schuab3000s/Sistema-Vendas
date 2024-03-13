@@ -113,6 +113,21 @@ public class Banco {
         return Optional.empty();
     }
 
+    /**
+     * Consulta um pedido pelo código de cadastro.
+     * 
+     * @param codigo Código de cadastro do pedido.
+     * @return Optional contendo o pedido encontrado, se existir.
+     */
+    public Optional<Pedido> consultarPedidoPorCodigo(String codigo) {
+        for (Pedido pedido : pedidos) {
+            if (pedido.getCodigo().equalsIgnoreCase(codigo)) {
+                return Optional.of(pedido);
+            }
+        }
+        return Optional.empty();
+    }
+
     public List<Livro> consultarLivroPorNome(String nome) {
         List<Livro> livrosEncontrados = new ArrayList<>();
         for (Produto produto : produtos) {

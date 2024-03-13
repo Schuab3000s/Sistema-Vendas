@@ -6,6 +6,7 @@ import java.util.Optional;
 import bancoDados.Banco;
 import entidades.Caderno;
 import entidades.Livro;
+import entidades.Pedido;
 import entidades.Produto;
 
 /**
@@ -115,6 +116,15 @@ public class ProdutoNegocio {
             }
         } else {
             System.out.println("Nenhum caderno encontrado com a matéria fornecida.");
+        }
+    }
+
+    public void consultarPedidoPorCodigo(String codigo) {
+        Optional<Pedido> pedidoOptional = bancoDados.consultarPedidoPorCodigo(codigo);
+        if (pedidoOptional.isPresent()) {
+            System.out.println("Pedido encontrado: " + pedidoOptional.get());
+        } else {
+            System.out.println("Pedido não encontrado.");
         }
     }
 
