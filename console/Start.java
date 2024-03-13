@@ -3,11 +3,21 @@ package console;
 import java.util.Optional;
 
 import bancoDados.Banco;
+import entidades.Caderno;
 import entidades.Cliente;
+import entidades.Cupom;
+import entidades.Livro;
+import entidades.Pedido;
 import negocio.ClienteNegocio;
 import negocio.PedidoNegocio;
 import negocio.ProdutoNegocio;
 import utilidades.LeitoraDados;
+
+/**
+ * Classe responsável por controlar a execução da aplicação.
+ * 
+ * @author schuab
+ */
 
 public class Start {
 
@@ -21,6 +31,7 @@ public class Start {
 
     /**
      * Método utilitário para inicializar a aplicação.
+     * 
      * @param args Parâmetros que podem ser passados para auxiliar na execução.
      */
     public static void main(String[] args) {
@@ -29,7 +40,7 @@ public class Start {
 
         String opcao = "";
 
-        while(true) {
+        while (true) {
 
             if (clienteLogado == null) {
 
@@ -44,13 +55,13 @@ public class Start {
             System.out.println("Selecione uma opção:");
             System.out.println("1 - Cadastrar Livro");
             System.out.println("2 - Excluir Livro");
-            //TODO Desafio: Consultar Livro(nome)
+            // TODO Desafio: Consultar Livro(nome)
             System.out.println("3 - Cadastrar Caderno");
             System.out.println("4 - Excluir Caderno");
-            //TODO Desafio: Consultar Caderno(matéria)
+            // TODO Desafio: Consultar Caderno(matéria)
             System.out.println("5 - Fazer pedido");
             System.out.println("6 - Excluir pedido");
-            //TODO Desafio: Consultar Pedido(código)
+            // TODO Desafio: Consultar Pedido(código)
             System.out.println("7 - Listar produtos");
             System.out.println("8 - Listar pedidos");
             System.out.println("9 - Deslogar");
@@ -69,10 +80,13 @@ public class Start {
                     produtoNegocio.excluir(codigoLivro);
                     break;
                 case "3":
-                    //TODO Cadastrar Caderno
+                    Caderno caderno = LeitoraDados.lerCaderno();
+                    produtoNegocio.salvar(caderno);
                     break;
                 case "4":
-                    //TODO Excluir Caderno
+                    System.out.println("Digite o código do caderno");
+                    String codigoCaderno = LeitoraDados.lerDado();
+                    produtoNegocio.excluir(codigoCaderno);
                     break;
                 case "5":
                     Pedido pedido = LeitoraDados.lerPedido(banco);
@@ -93,7 +107,7 @@ public class Start {
                     produtoNegocio.listarTodos();
                     break;
                 case "8":
-                    //TODO Listar todos os Pedidos
+                    pedidoNegocio.listarTodos();
                     break;
                 case "9":
                     System.out.println(String.format("Volte sempre %s!", clienteLogado.getNome()));
@@ -112,6 +126,7 @@ public class Start {
 
     /**
      * Procura o usuário na base de dados.
+     * 
      * @param cpf CPF do usuário que deseja logar na aplicação
      */
     private static void identificarUsuario(String cpf) {

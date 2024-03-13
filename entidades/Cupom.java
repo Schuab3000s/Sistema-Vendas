@@ -1,5 +1,13 @@
 package entidades;
 
+/**
+ * Classe que representa a entidade cupom. Este pode ser utilizado no ato do
+ * fechamento do pedido
+ * para obter um desconto, caso desejado.
+ * 
+ * @author schuab
+ */
+
 public class Cupom {
 
     /**
@@ -14,7 +22,8 @@ public class Cupom {
 
     /**
      * Construtor do cupom
-     * @param codigo Código do cupom
+     * 
+     * @param codigo   Código do cupom
      * @param desconto Porcentagem de desconto
      */
     public Cupom(String codigo, int desconto) {

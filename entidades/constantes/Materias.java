@@ -1,18 +1,17 @@
 package entidades.constantes;
 
 /**
- * Gêneros dos livros vendidos.
+ * Quantidade de matérias do caderno vendido.
  * 
  * @author schuab
  */
+public enum Materias {
 
-public enum Genero {
+    M2(2),
 
-    DRAMA(15),
+    M5(5),
 
-    SUSPENSE(10),
-
-    ROMANCE(5);
+    M10(10);
 
     private double fator;
 
@@ -21,8 +20,8 @@ public enum Genero {
      * 
      * @param fator Valor por tipo que influencia no cálculo do frete.
      */
-    Genero(double fator) {
-        this.fator = fator / 100;
+    Materias(double fator) {
+        this.fator = fator / 10;
     }
 
     public double getFator() {

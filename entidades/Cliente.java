@@ -2,6 +2,7 @@ package entidades;
 
 /**
  * Classe que representa a entidade cliente. Este pode fazer um pedido.
+ * 
  * @author schuab
  */
 public class Cliente {

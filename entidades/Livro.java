@@ -2,6 +2,13 @@ package entidades;
 
 import entidades.constantes.Genero;
 
+/**
+ * Classe que representa um livro, qual é uma especialização de um produto da
+ * loja.
+ * 
+ * @author schuab
+ */
+
 public class Livro extends Produto {
 
     /**

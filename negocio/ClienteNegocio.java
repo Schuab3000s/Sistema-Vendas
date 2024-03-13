@@ -7,6 +7,7 @@ import entidades.Cliente;
 
 /**
  * Classe para manipular a entidade {@link Cliente}.
+ * 
  * @author schuab
  */
 public class ClienteNegocio {
@@ -18,6 +19,7 @@ public class ClienteNegocio {
 
     /**
      * Construtor.
+     * 
      * @param banco Banco de dados para ter acesso aos clientes cadastrados
      */
     public ClienteNegocio(Banco banco) {
@@ -26,6 +28,7 @@ public class ClienteNegocio {
 
     /**
      * Consulta o cliente pelo seu CPF.
+     * 
      * @param cpf CPF de um cliente
      * @return O cliente que possuir o CPF passado.
      */
@@ -40,15 +43,16 @@ public class ClienteNegocio {
 
     /**
      * Cadastra um novo cliente.
+     * 
      * @param cliente Novo cliente que terá acesso a aplicação
      */
-    //TODO Fazer a inclusão de cliente
+    // TODO Fazer a inclusão de cliente
 
     /**
      * Exclui um cliente específico.
+     * 
      * @param cpf CPF do cliente
      */
-    //TODO Fazer a exclusão de cliente
+    // TODO Fazer a exclusão de cliente
 
 }
-

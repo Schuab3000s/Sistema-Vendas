@@ -7,8 +7,10 @@ import entidades.Produto;
 
 /**
  * Classe para manipular a entidade {@link Produto}.
- * @author thiago leite
+ * 
+ * @author schuab
  */
+
 public class ProdutoNegocio {
 
     /**
@@ -18,6 +20,7 @@ public class ProdutoNegocio {
 
     /**
      * Construtor.
+     * 
      * @param banco Banco de dados para ter armazenar e ter acesso os produtos
      */
     public ProdutoNegocio(Banco banco) {
@@ -26,6 +29,7 @@ public class ProdutoNegocio {
 
     /**
      * Salva um novo produto(livro ou caderno) na loja.
+     * 
      * @param novoProduto Livro ou caderno que pode ser vendido
      */
     public void salvar(Produto novoProduto) {
@@ -35,7 +39,7 @@ public class ProdutoNegocio {
         novoProduto.setCodigo(codigo);
 
         boolean produtoRepetido = false;
-        for (Produto produto: bancoDados.getProdutos()) {
+        for (Produto produto : bancoDados.getProdutos()) {
             if (produto.getCodigo() == novoProduto.getCodigo()) {
                 produtoRepetido = true;
                 System.out.println("Produto já cadastrado.");
@@ -51,23 +55,40 @@ public class ProdutoNegocio {
 
     /**
      * Exclui um produto pelo código de cadastro.
+     * 
      * @param codigo Código de cadastro do produto
      */
     public void excluir(String codigo) {
-        //TODO Implementar a exclusão
+        int produtoExclusao = -1;
+        for (int i = 0; i < bancoDados.getProdutos().length; i++) {
+
+            Produto produto = bancoDados.getProdutos()[i];
+            if (produto.getCodigo().equals(codigo)) {
+                produtoExclusao = i;
+                break;
+            }
+        }
+
+        if (produtoExclusao != -1) {
+            bancoDados.removerProduto(produtoExclusao);
+            System.out.println("Produto excluído com sucesso.");
+        } else {
+            System.out.println("Produto inexistente.");
+        }
     }
 
     /**
      * Obtem um produto a partir de seu código de cadastro.
+     * 
      * @param codigo Código de cadastro do produto
      * @return Optional indicando a existência ou não do Produto
      */
     public Optional<Produto> consultar(String codigo) {
 
-        for (Produto produto: bancoDados.getProdutos()) {
+        for (Produto produto : bancoDados.getProdutos()) {
 
             if (produto.getCodigo().equalsIgnoreCase(codigo)) {
-                return  Optional.of(produto);
+                return Optional.of(produto);
             }
         }
 
@@ -83,7 +104,7 @@ public class ProdutoNegocio {
             System.out.println("Não existem produtos cadastrados");
         } else {
 
-            for (Produto produto: bancoDados.getProdutos()) {
+            for (Produto produto : bancoDados.getProdutos()) {
                 System.out.println(produto.toString());
             }
         }

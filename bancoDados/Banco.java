@@ -8,6 +8,15 @@ import entidades.Cupom;
 import entidades.Pedido;
 import entidades.Produto;
 
+/**
+ * Classe responsável por simular um banco de dados. Esta faz as inserções e
+ * exclusões da
+ * aplicação. Atualizações não são permitidas para facilitar o funcionamento da
+ * aplicação.
+ * 
+ * @author schuab
+ */
+
 public class Banco {
 
     /**
