@@ -56,6 +56,10 @@ public class Banco {
         return cliente;
     }
 
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public Cupom[] getCupons() {
         return cupons.toArray(new Cupom[cupons.size()]);
     }
@@ -90,15 +94,6 @@ public class Banco {
 
     public void removerCupom(Cupom cupom) {
         cupons.remove(cupom);
-    }
-
-    /**
-     * Define o cliente atual do banco de dados.
-     * 
-     * @param cliente Cliente a ser definido
-     */
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
     }
 
     /**

@@ -12,7 +12,6 @@ import entidades.Pedido;
 import entidades.Produto;
 import entidades.constantes.Genero;
 import entidades.constantes.Materias;
-import negocio.ProdutoNegocio;
 
 /**
  * Classe utilitária para auxiliar na leitura de entradas de dados via teclado.
@@ -37,10 +36,7 @@ public final class LeitoraDados {
 	 * @return Dado lido
 	 */
 	public static String lerDado() {
-
-		String texto = scanner.nextLine();
-
-		return texto;
+		return scanner.nextLine();
 	}
 
 	/**
@@ -74,7 +70,6 @@ public final class LeitoraDados {
 	 * @return Um caderno a partir dos dados de entrada
 	 */
 	public static Caderno lerCaderno() {
-
 		System.out.println("Cadastrando caderno...");
 		Caderno caderno = new Caderno();
 
@@ -82,9 +77,15 @@ public final class LeitoraDados {
 		String materias = lerDado();
 		caderno.setTipo(Materias.valueOf(materias.toUpperCase()));
 
-		System.out.println("Digite o preço(padrão 0.0)");
+		System.out.println("Digite o preço (padrão 0.0)");
 		String preco = lerDado();
-		caderno.setPreco(Double.parseDouble(preco));
+		try {
+			double precoDouble = Double.parseDouble(preco);
+			caderno.setPreco(precoDouble);
+		} catch (NumberFormatException e) {
+			System.out.println("Preço inválido. Usando o valor padrão (0.0).");
+			caderno.setPreco(0.0);
+		}
 
 		return caderno;
 	}
