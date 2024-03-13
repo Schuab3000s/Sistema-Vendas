@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe que representa a entidade pedido, qual é a compra dos produtos por um
- * cliente.
+ * Classe que representa a entidade pedido, que é a compra dos produtos por um cliente.
  * 
  * @author schuab
  */
-
- public class Pedido {
+public class Pedido {
 
     /**
      * Código do pedido.
@@ -18,12 +16,12 @@ import java.util.List;
     private String codigo;
 
     /**
-     * {@inheritDoc}.
+     * Cliente associado ao pedido.
      */
     private Cliente cliente;
 
     /**
-     * Lista de {@link Produto}.
+     * Lista de produtos comprados no pedido.
      */
     private List<Produto> produtos;
 
@@ -68,19 +66,24 @@ import java.util.List;
         this.produtos = produtos;
     }
 
-    private String getProdutosComprados() {
-
-        StringBuilder produtos = new StringBuilder();
-        produtos.append("[");
-        for (Produto produto: getProdutos()) {
-            produtos.append(produto.toString());
-            produtos.append("Qtd:");
-            produtos.append(produto.getQuantidade());
-            produtos.append(" ");
+    /**
+     * Obtém a descrição dos produtos comprados no pedido.
+     * 
+     * @return A descrição dos produtos comprados no pedido.
+     */
+    public String getDescricaoProdutos() {
+        StringBuilder descricao = new StringBuilder();
+        descricao.append("[");
+        if (!produtos.isEmpty()) {
+            for (Produto produto : produtos) {
+                descricao.append(produto.toString());
+                descricao.append("Qtd:");
+                descricao.append(produto.getQuantidade());
+                descricao.append(" ");
+            }
         }
-        produtos.append("]");
-
-        return produtos.toString();
+        descricao.append("]");
+        return descricao.toString();
     }
 
     @Override
@@ -88,9 +91,8 @@ import java.util.List;
         return "Pedido{" +
                 "codigo='" + codigo + '\'' +
                 ", cliente=" + cliente +
-                ", produtos=" + getProdutosComprados() +
+                ", produtos=" + getDescricaoProdutos() +
                 ", total=" + total +
                 '}';
     }
-
 }

@@ -3,31 +3,42 @@ package entidades;
 import entidades.constantes.Materias;
 
 /**
- * Classe que representa um caderno, qual é uma especialização de um produto da loja.
+ * Classe que representa um caderno, que é uma especialização de um produto da loja.
  * @author schuab
  */
-
- public class Caderno extends Produto {
+public class Caderno extends Produto {
 
     /**
      * Quantidade de matérias que o caderno pode ter.
      */
     private Materias tipo;
 
+    /**
+     * Obtém o tipo de matérias do caderno.
+     * 
+     * @return O tipo de matérias do caderno.
+     */
     public Materias getTipo() {
         return tipo;
     }
 
+    /**
+     * Define o tipo de matérias do caderno.
+     * 
+     * @param tipo O tipo de matérias do caderno a ser definido.
+     */
     public void setTipo(Materias tipo) {
         this.tipo = tipo;
     }
 
     /**
-     * {@inheritDoc}.
+     * Calcula o frete do caderno.
+     * 
+     * @return O valor do frete do caderno.
      */
     @Override
     public double calcularFrete() {
-        return (getPreco() * getQuantidade()) + tipo.getFator();
+        return (getPreco() * tipo.getFator()) + getQuantidade();
     }
 
     @Override
@@ -39,4 +50,5 @@ import entidades.constantes.Materias;
                 '}';
     }
 }
+
 
