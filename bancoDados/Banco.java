@@ -2,6 +2,7 @@ package bancoDados;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import entidades.Cliente;
 import entidades.Cupom;
@@ -89,5 +90,29 @@ public class Banco {
 
     public void removerCupom(Cupom cupom) {
         cupons.remove(cupom);
+    }
+
+    /**
+     * Define o cliente atual do banco de dados.
+     * 
+     * @param cliente Cliente a ser definido
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
+     * Consulta um produto pelo código de cadastro.
+     * 
+     * @param codigo Código de cadastro do produto.
+     * @return Optional contendo o produto encontrado, se existir.
+     */
+    public Optional<Produto> consultarProdutoPorCodigo(String codigo) {
+        for (Produto produto : produtos) {
+            if (produto.getCodigo().equalsIgnoreCase(codigo)) {
+                return Optional.of(produto);
+            }
+        }
+        return Optional.empty();
     }
 }

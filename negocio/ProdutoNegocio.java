@@ -10,103 +10,86 @@ import entidades.Produto;
  * 
  * @author schuab
  */
-
 public class ProdutoNegocio {
 
     /**
-     * {@inheritDoc}.
+     * Banco de dados para armazenar e acessar os produtos.
      */
     private Banco bancoDados;
 
     /**
      * Construtor.
      * 
-     * @param banco Banco de dados para ter armazenar e ter acesso os produtos
+     * @param banco Banco de dados para armazenar e acessar os produtos.
      */
     public ProdutoNegocio(Banco banco) {
         this.bancoDados = banco;
     }
 
     /**
-     * Salva um novo produto(livro ou caderno) na loja.
+     * Salva um novo produto (livro ou caderno) na loja.
      * 
-     * @param novoProduto Livro ou caderno que pode ser vendido
+     * @param novoProduto Livro ou caderno a ser cadastrado.
      */
     public void salvar(Produto novoProduto) {
-
-        String codigo = "PR%04d";
-        codigo = String.format(codigo, bancoDados.getProdutos().length);
+        String codigo = String.format("PR%04d", bancoDados.getProdutos().length);
         novoProduto.setCodigo(codigo);
 
-        boolean produtoRepetido = false;
-        for (Produto produto : bancoDados.getProdutos()) {
-            if (produto.getCodigo().equals(novoProduto.getCodigo())) {
-                produtoRepetido = true;
-                System.out.println("Produto já cadastrado.");
-                break;
-            }
+        if (buscarProdutoPorCodigo(novoProduto.getCodigo()).isPresent()) {
+            System.out.println("Produto já cadastrado.");
+            return;
         }
 
-        if (!produtoRepetido) {
-            this.bancoDados.adicionarProduto(novoProduto);
-            System.out.println("Produto cadastrado com sucesso.");
-        }
+        bancoDados.adicionarProduto(novoProduto);
+        System.out.println("Produto cadastrado com sucesso.");
     }
 
     /**
      * Exclui um produto pelo código de cadastro.
      * 
-     * @param codigo Código de cadastro do produto
+     * @param codigo Código de cadastro do produto.
      */
     public void excluir(String codigo) {
-        Produto produto = buscarProdutoPorCodigo(codigo);
-        if (produto != null) {
-            bancoDados.removerProduto(produto);
+        Optional<Produto> produtoOptional = buscarProdutoPorCodigo(codigo);
+        if (produtoOptional.isPresent()) {
+            bancoDados.removerProduto(produtoOptional.get());
             System.out.println("Produto excluído com sucesso.");
         } else {
             System.out.println("Produto inexistente.");
         }
     }
-    
-    private Produto buscarProdutoPorCodigo(String codigo) {
-        for (Produto produto : bancoDados.getProdutos()) {
-            if (produto.getCodigo().equals(codigo)) {
-                return produto;
-            }
-        }
-        return null;
-    }
 
     /**
-     * Obtem um produto a partir de seu código de cadastro.
+     * Consulta um produto pelo código de cadastro.
      * 
-     * @param codigo Código de cadastro do produto
-     * @return Optional indicando a existência ou não do Produto
+     * @param codigo Código de cadastro do produto.
+     * @return Optional contendo o produto encontrado, se existir.
      */
     public Optional<Produto> consultar(String codigo) {
-
-        for (Produto produto : bancoDados.getProdutos()) {
-
-            if (produto.getCodigo().equalsIgnoreCase(codigo)) {
-                return Optional.of(produto);
-            }
-        }
-
-        return Optional.empty();
+        return bancoDados.consultarProdutoPorCodigo(codigo);
     }
 
     /**
      * Lista todos os produtos cadastrados.
      */
     public void listarTodos() {
-
-        if (bancoDados.getProdutos().length == 0) {
-            System.out.println("Não existem produtos cadastrados");
+        Produto[] produtos = bancoDados.getProdutos();
+        if (produtos.length == 0) {
+            System.out.println("Não existem produtos cadastrados.");
         } else {
-
-            for (Produto produto : bancoDados.getProdutos()) {
-                System.out.println(produto.toString());
+            for (Produto produto : produtos) {
+                System.out.println(produto);
             }
         }
+    }
+
+    /**
+     * Busca um produto pelo código de cadastro.
+     * 
+     * @param codigo Código de cadastro do produto.
+     * @return Optional contendo o produto encontrado, se existir.
+     */
+    private Optional<Produto> buscarProdutoPorCodigo(String codigo) {
+        return bancoDados.consultarProdutoPorCodigo(codigo);
     }
 }

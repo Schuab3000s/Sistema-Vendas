@@ -12,9 +12,6 @@ import entidades.Cliente;
  */
 public class ClienteNegocio {
 
-    /**
-     * {@inheritDoc}.
-     */
     private Banco bancoDados;
 
     /**
@@ -33,7 +30,6 @@ public class ClienteNegocio {
      * @return O cliente que possuir o CPF passado.
      */
     public Optional<Cliente> consultar(String cpf) {
-
         if (bancoDados.getCliente().getCpf().equals(cpf)) {
             return Optional.of(bancoDados.getCliente());
         } else {
@@ -46,13 +42,22 @@ public class ClienteNegocio {
      * 
      * @param cliente Novo cliente que terá acesso a aplicação
      */
-    // TODO Fazer a inclusão de cliente
+    public void cadastrar(Cliente cliente) {
+        bancoDados.setCliente(cliente);
+        System.out.println("Cliente cadastrado com sucesso.");
+    }
 
     /**
      * Exclui um cliente específico.
      * 
      * @param cpf CPF do cliente
      */
-    // TODO Fazer a exclusão de cliente
-
+    public void excluir(String cpf) {
+        if (bancoDados.getCliente().getCpf().equals(cpf)) {
+            bancoDados.setCliente(null);
+            System.out.println("Cliente excluído com sucesso.");
+        } else {
+            System.out.println("Cliente inexistente.");
+        }
+    }
 }

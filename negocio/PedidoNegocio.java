@@ -13,42 +13,26 @@ import entidades.Produto;
  * 
  * @author schuab
  */
-
 public class PedidoNegocio {
 
     /**
-     * {@inheritDoc}.
+     * Banco de dados para armazenar e acessar os pedidos.
      */
     private Banco bancoDados;
 
     /**
      * Construtor.
      * 
-     * @param banco Banco de dados para ter armazenar e ter acesso os pedidos
+     * @param banco Banco de dados para armazenar e acessar os pedidos.
      */
     public PedidoNegocio(Banco banco) {
         this.bancoDados = banco;
     }
 
-    private double calcularTotal(List<Produto> produtos, Cupom cupom) {
-
-        double total = 0.0;
-        for (Produto produto : produtos) {
-            total += produto.calcularFrete();
-        }
-
-        if (cupom != null) {
-            return total * (1 - cupom.getDesconto());
-        } else {
-            return total;
-        }
-
-    }
-
     /**
-     * Salva um novo pedido sem cupom de desconto.
+     * Salva um novo pedido.
      * 
-     * @param novoPedido Pedido a ser armazenado
+     * @param novoPedido Pedido a ser armazenado.
      */
     public void salvar(Pedido novoPedido) {
         salvar(novoPedido, null);
@@ -57,15 +41,12 @@ public class PedidoNegocio {
     /**
      * Salva um novo pedido com cupom de desconto.
      * 
-     * @param novoPedido Pedido a ser armazenado
-     * @param cupom      Cupom de desconto a ser utilizado
+     * @param novoPedido Pedido a ser armazenado.
+     * @param cupom Cupom de desconto a ser aplicado.
      */
     public void salvar(Pedido novoPedido, Cupom cupom) {
-
-        String codigo = "PE%4d%2d%04d";
         LocalDate hoje = LocalDate.now();
-        codigo = String.format(codigo, hoje.getYear(), hoje.getMonthValue(), bancoDados.getPedidos().length);
-
+        String codigo = String.format("PE%4d%02d%04d", hoje.getYear(), hoje.getMonthValue(), bancoDados.getPedidos().length);
         novoPedido.setCodigo(codigo);
         novoPedido.setCliente(bancoDados.getCliente());
         novoPedido.setTotal(calcularTotal(novoPedido.getProdutos(), cupom));
@@ -74,43 +55,45 @@ public class PedidoNegocio {
     }
 
     /**
-     * Exclui um pedido a partir de seu código de rastreio.
+     * Calcula o total do pedido, aplicando o desconto do cupom, se fornecido.
      * 
-     * @param codigo Código do pedido
+     * @param produtos Lista de produtos no pedido.
+     * @param cupom Cupom de desconto a ser aplicado.
+     * @return O total do pedido.
+     */
+    private double calcularTotal(List<Produto> produtos, Cupom cupom) {
+        double total = produtos.stream().mapToDouble(Produto::calcularFrete).sum();
+        return cupom != null ? total * (1 - cupom.getDesconto()) : total;
+    }
+
+    /**
+     * Exclui um pedido com base no código.
+     * 
+     * @param codigo Código do pedido a ser excluído.
      */
     public void excluir(String codigo) {
-
-        int pedidoExclusao = -1;
         for (int i = 0; i < bancoDados.getPedidos().length; i++) {
-
             Pedido pedido = bancoDados.getPedidos()[i];
             if (pedido.getCodigo().equals(codigo)) {
-                pedidoExclusao = i;
-                break;
+                bancoDados.removerPedido(i);
+                System.out.println("Pedido excluído com sucesso.");
+                return;
             }
         }
-
-        if (pedidoExclusao != -1) {
-            bancoDados.removerPedido(pedidoExclusao);
-            System.out.println("Pedido excluído com sucesso.");
-        } else {
-            System.out.println("Pedido inexistente.");
-        }
+        System.out.println("Pedido inexistente.");
     }
 
     /**
      * Lista todos os pedidos realizados.
      */
     public void listarTodos() {
-
-        if (bancoDados.getPedidos().length == 0) {
-            System.out.println("Não existem pedidos cadastrados");
+        Pedido[] pedidos = bancoDados.getPedidos();
+        if (pedidos.length == 0) {
+            System.out.println("Não existem pedidos cadastrados.");
         } else {
-
-            for (Pedido pedido: bancoDados.getPedidos()) {
-                System.out.println(pedido.toString());
+            for (Pedido pedido : pedidos) {
+                System.out.println(pedido);
             }
         }
     }
-
 }
